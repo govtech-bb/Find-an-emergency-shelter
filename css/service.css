@@ -113,8 +113,14 @@
   background: var(--color-blue-10);
   border-radius: var(--radius-sm);
   align-self: start;
-  position: sticky;
-  top: var(--spacing-s);
+}
+/* Only stick the filters on desktop, where there's a side-by-side grid.
+   On mobile the filters sit above the results and must scroll out of view. */
+@media (min-width: 1024px) {
+  .finder__filters {
+    position: sticky;
+    top: var(--spacing-s);
+  }
 }
 .finder__filters h2 {
   margin: 0;
