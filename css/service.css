@@ -1,0 +1,448 @@
+/* Service-specific styles for Find an emergency shelter.
+   Built on top of dist/styles.css using the alpha.gov.bb design tokens. */
+
+.service-main {
+  padding-block: var(--spacing-m);
+}
+
+.service-meta {
+  color: var(--color-text-muted);
+  margin-block: var(--spacing-xs) var(--spacing-s);
+}
+
+.service-lede {
+  margin-bottom: var(--spacing-m);
+  max-width: 48rem;
+}
+
+.service-divider {
+  border: 0;
+  border-top: 1px solid var(--color-grey-00);
+  margin-block: var(--spacing-m);
+  max-width: 48rem;
+}
+
+.service-section {
+  margin-bottom: var(--spacing-l);
+  max-width: 48rem;
+}
+
+.service-section > h2 {
+  margin-bottom: var(--spacing-s);
+}
+
+.service-section > h3 {
+  margin-block: var(--spacing-m) var(--spacing-s);
+}
+
+.service-section p + p,
+.service-section .govbb-list + p,
+.service-section p + .govbb-list {
+  margin-top: var(--spacing-s);
+}
+
+/* Back link above the H1 on inner pages */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-block: var(--spacing-s);
+}
+.back-link::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right: 8px solid currentColor;
+  border-left-width: 0;
+}
+
+/* Start-now button: GDS-style call to action — solid green with arrow.
+   Builds on green-00 token, not on any GOV.UK code. */
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  background: var(--color-green-00);
+  color: var(--color-white-00);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-h4);
+  line-height: 1;
+  padding: var(--spacing-s) var(--spacing-xm);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-family-base);
+  transition: background-color .2s, box-shadow .2s;
+  outline: 4px solid transparent;
+  outline-offset: 2px;
+}
+.btn-start::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-left: 10px solid currentColor;
+  border-right-width: 0;
+}
+.btn-start:hover {
+  background: #00543d;
+  box-shadow: inset 0 0 0 4px rgba(255,255,255,0.1);
+  color: var(--color-white-00);
+  text-decoration: none;
+}
+.btn-start:focus-visible,
+.btn-start:active {
+  outline-color: var(--color-yellow-100);
+  background: #00432f;
+  color: var(--color-white-00);
+}
+
+/* "Use this service" / "Before you start" inset summary */
+.service-callout {
+  background: var(--color-blue-10);
+  border-left: 8px solid var(--color-blue-100);
+  padding: var(--spacing-s) var(--spacing-xm);
+  margin-block: var(--spacing-m);
+}
+.service-callout > h2 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Finder layout */
+.finder__grid {
+  display: grid;
+  gap: var(--spacing-m);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 1024px) {
+  .finder__grid {
+    grid-template-columns: 18rem 1fr;
+  }
+}
+.finder__filters {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-s);
+  padding: var(--spacing-m);
+  background: var(--color-blue-10);
+  border-radius: var(--radius-sm);
+  align-self: start;
+  position: sticky;
+  top: var(--spacing-s);
+}
+.finder__filters h2 {
+  margin: 0;
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+}
+.finder__count {
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-s);
+}
+.finder__list {
+  display: grid;
+  gap: var(--spacing-s);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) {
+  .finder__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Shelter card */
+.shelter {
+  padding: var(--spacing-s) var(--spacing-xm);
+  border: 2px solid var(--color-grey-00);
+  border-radius: var(--radius-sm);
+  background: var(--color-background);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.shelter__name {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+.shelter__meta {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+.shelter__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+.tag {
+  font-size: var(--font-size-caption-sm);
+  font-weight: var(--font-weight-bold);
+  padding: .125rem .5rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-grey-00);
+  color: var(--color-text);
+}
+.tag--cat1 { background: var(--color-yellow-40); }
+.tag--cat2 { background: var(--color-blue-10); }
+.tag--access { background: var(--color-teal-40); }
+.tag--water { background: var(--color-green-40); }
+.tag--no-water { background: var(--color-red-10); }
+.tag--public { background: var(--color-grey-00); }
+.tag--private { background: var(--color-pink-10); }
+
+.shelter__link {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.shelter__link:hover {
+  color: var(--color-link-hover);
+  background-color: var(--color-link-hover-bg);
+}
+.shelter__link:focus-visible,
+.shelter__link:active {
+  color: var(--color-link-active);
+  background-color: var(--color-link-active-bg);
+  outline: none;
+}
+.shelter__notes {
+  font-size: var(--font-size-caption);
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+.shelter__empty {
+  grid-column: 1 / -1;
+  padding: var(--spacing-m);
+  text-align: center;
+  border: 2px dashed var(--color-grey-00);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+}
+.shelter__empty p {
+  margin: 0;
+}
+.shelter__empty p + p {
+  margin-top: var(--spacing-xs);
+}
+
+/* Emergency / live-status notice on the find page */
+.notice {
+  padding: var(--spacing-s) var(--spacing-xm);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-m);
+}
+.notice > p {
+  margin: 0;
+}
+.notice--emergency {
+  background: var(--color-red-10);
+  border-left: 8px solid var(--color-red-00);
+}
+
+/* Phone-number list */
+.phone-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.phone-list__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-s);
+  padding-block: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-grey-00);
+}
+.phone-list__row:last-child {
+  border-bottom: 0;
+}
+.phone-list__label {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Need-to-know: a single master accordion that wraps the six sub-accordions. */
+.need-to-know-toggle {
+  margin-top: var(--spacing-l);
+  border: 2px solid var(--color-teal-00);
+  border-radius: var(--radius-sm);
+  background: var(--color-background);
+}
+.need-to-know-toggle__summary {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xxs);
+  padding: var(--spacing-s) var(--spacing-xm);
+  background: var(--color-teal-10);
+  list-style: none;
+  outline: none;
+  border-radius: calc(var(--radius-sm) - 2px);
+}
+.need-to-know-toggle__summary::-webkit-details-marker { display: none; }
+.need-to-know-toggle__summary::marker { content: ""; }
+.need-to-know-toggle__summary:hover,
+.need-to-know-toggle__summary:focus-visible {
+  background: var(--color-teal-40);
+}
+.need-to-know-toggle__summary:focus-visible {
+  outline: 4px solid var(--color-teal-100);
+  outline-offset: -2px;
+}
+.need-to-know-toggle__title {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  font-weight: var(--font-weight-bold);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+.need-to-know-toggle__title::before {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-left: 10px solid currentColor;
+  border-right-width: 0;
+  transition: transform .2s;
+}
+.need-to-know-toggle[open] .need-to-know-toggle__title::before {
+  transform: rotate(90deg);
+}
+.need-to-know-toggle__hint {
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--color-text-muted);
+}
+.need-to-know-toggle__content {
+  padding: var(--spacing-m) var(--spacing-xm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.need-to-know-toggle__content .govbb-show-hide {
+  padding-block: var(--spacing-xs);
+  border-bottom: 1px solid var(--color-grey-00);
+}
+.need-to-know-toggle__content .govbb-show-hide:last-child {
+  border-bottom: 0;
+}
+
+/* Prominent Emergency phone numbers panel on the start page */
+.emergency-phones {
+  margin-block: var(--spacing-m);
+  padding: var(--spacing-m) var(--spacing-xm);
+  background: var(--color-red-10);
+  border-left: 8px solid var(--color-red-00);
+  border-radius: var(--radius-sm);
+}
+.emergency-phones > h2 {
+  margin-bottom: var(--spacing-xs);
+}
+.emergency-phones > p {
+  margin-bottom: var(--spacing-s);
+}
+.emergency-phones__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xs);
+}
+@media (min-width: 640px) {
+  .emergency-phones__list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.emergency-phones__link {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-s) var(--spacing-xm);
+  background: var(--color-background);
+  border: 2px solid var(--color-red-00);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--color-text);
+  transition: background-color .15s, box-shadow .15s;
+}
+.emergency-phones__link:hover {
+  background: var(--color-yellow-100);
+  text-decoration: none;
+}
+.emergency-phones__link:focus-visible {
+  outline: 4px solid var(--color-teal-100);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+.emergency-phones__service {
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  color: var(--color-text-muted);
+}
+.emergency-phones__number {
+  font-size: var(--font-size-h2);
+  line-height: 1;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-red-00);
+  margin-top: var(--spacing-xxs);
+}
+
+/* Filter group rows: scale checkboxes/radios down so the sidebar fits */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.filter-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+.filter-checkboxes .govbb-checkbox,
+.filter-checkboxes .govbb-radio {
+  width: 2rem;
+  height: 2rem;
+}
+.filter-checkboxes .govbb-checkbox:before,
+.filter-checkboxes .govbb-radio:before {
+  width: 12px;
+  height: 12px;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+.skip-link:focus {
+  left: var(--spacing-s);
+  top: var(--spacing-s);
+  z-index: 100;
+  background: var(--color-yellow-100);
+  padding: var(--spacing-xs) var(--spacing-s);
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Related-information block on the start page */
+.related-info {
+  margin-top: var(--spacing-l);
+  padding-top: var(--spacing-m);
+  border-top: 4px solid var(--color-grey-00);
+}
+.related-info > h2 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+  margin-bottom: var(--spacing-s);
+}
