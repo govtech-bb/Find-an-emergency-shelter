@@ -116,10 +116,12 @@
   }
 
   function readFilters() {
+    const parishEl = document.getElementById('filter-parish');
+    const accessEl = document.getElementById('filter-access');
     return {
-      parish: document.getElementById('filter-parish').value,
+      parish: parishEl ? parishEl.value : '',
       category: (document.querySelector('input[name="category"]:checked') || {}).value || '',
-      access: document.getElementById('filter-access').checked
+      access: accessEl ? accessEl.checked : false
     };
   }
 
@@ -133,15 +135,16 @@
   }
 
   function render() {
+    const list = document.getElementById('shelter-list');
+    const count = document.getElementById('result-count');
+    if (!list || !count) return; // not on the find page — nothing to render
+
     const f = readFilters();
     const matched = filterShelters(SHELTERS, f);
     matched.sort(function (a, b) {
       if (a.parish !== b.parish) return a.parish.localeCompare(b.parish);
       return a.name.localeCompare(b.name);
     });
-
-    const list = document.getElementById('shelter-list');
-    const count = document.getElementById('result-count');
 
     if (matched.length === 0) {
       list.innerHTML = `
