@@ -5,9 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Find an emergency shelter — Government of Barbados</title>
   <meta name="description" content="Find an emergency shelter in Barbados to use during a hurricane or other emergency.">
+  <link rel="canonical" href="https://govtech-bb.github.io/Find-an-emergency-shelter/">
+  <meta property="og:title" content="Find an emergency shelter — Government of Barbados">
+  <meta property="og:description" content="Find an emergency shelter in Barbados to use during a hurricane or other emergency.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://govtech-bb.github.io/Find-an-emergency-shelter/">
+  <meta property="og:locale" content="en_BB">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" href="dist/assets/images/favicon.ico">
   <link rel="stylesheet" href="dist/styles.css">
   <link rel="stylesheet" href="css/service.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "GovernmentService",
+    "name": "Find an emergency shelter",
+    "description": "Find a public or private emergency shelter in Barbados to use during a hurricane or other emergency.",
+    "provider": {
+      "@type": "GovernmentOrganization",
+      "name": "Department of Emergency Management",
+      "telephone": "+1-246-438-7575",
+      "areaServed": "Barbados"
+    },
+    "audience": {
+      "@type": "Audience",
+      "geographicArea": {
+        "@type": "Country",
+        "name": "Barbados"
+      }
+    },
+    "url": "https://govtech-bb.github.io/Find-an-emergency-shelter/",
+    "inLanguage": "en-BB"
+  }
+  </script>
 </head>
 <body>
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -53,7 +83,7 @@
         </nav>
 
         <h1 class="govbb-text-h1" style="margin-top: var(--spacing-m);">Find an emergency shelter</h1>
-        <p class="service-meta govbb-text-caption">Last updated on May 27th, 2026</p>
+        <p class="service-meta govbb-text-caption">Last updated on May 27th, 2026. Next review: 1 May 2027.</p>
         <hr class="service-divider">
 
         <p class="govbb-text-body service-lede">
@@ -63,6 +93,7 @@
         <section class="service-section" aria-labelledby="how-it-works-heading">
           <h2 id="how-it-works-heading" class="govbb-text-h3">How this service works</h2>
           <p>You search shelters online. You visit the shelter in person once it has been activated.</p>
+          <p>This service is for anyone in Barbados — residents and visitors.</p>
           <p>Shelters open only when the Department of Emergency Management activates them, during the Atlantic hurricane season from <strong>1 June to 30 November</strong>.</p>
         </section>
 
@@ -174,5 +205,16 @@
       </div>
     </footer>
   </div>
+
+  <script>
+    // Register the service worker for offline use during hurricanes.
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {
+          // Failure is non-fatal — service worker is a progressive enhancement.
+        });
+      });
+    }
+  </script>
 </body>
 </html>

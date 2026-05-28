@@ -118,20 +118,85 @@
   function readFilters() {
     const parishEl = document.getElementById('filter-parish');
     const accessEl = document.getElementById('filter-access');
+    const searchEl = document.getElementById('filter-search');
+    const sortEl = document.getElementById('filter-sort');
     return {
       parish: parishEl ? parishEl.value : '',
       category: (document.querySelector('input[name="category"]:checked') || {}).value || '',
-      access: accessEl ? accessEl.checked : false
+      access: accessEl ? accessEl.checked : false,
+      search: searchEl ? searchEl.value.trim() : '',
+      sort: sortEl ? sortEl.value : 'parish'
     };
   }
 
   function filterShelters(shelters, f) {
+    const q = f.search.toLowerCase();
     return shelters.filter(function (s) {
       if (f.parish && s.parish !== f.parish) return false;
       if (f.category && String(s.category) !== f.category) return false;
       if (f.access && !s.access) return false;
+      if (q && !(s.name.toLowerCase().includes(q) || s.parish.toLowerCase().includes(q))) return false;
       return true;
     });
+  }
+
+  function sortShelters(list, sort) {
+    const copy = list.slice();
+    if (sort === 'name') {
+      copy.sort(function (a, b) { return a.name.localeCompare(b.name); });
+    } else if (sort === 'capacity') {
+      copy.sort(function (a, b) { return b.capacity - a.capacity; });
+    } else {
+      copy.sort(function (a, b) {
+        if (a.parish !== b.parish) return a.parish.localeCompare(b.parish);
+        return a.name.localeCompare(b.name);
+      });
+    }
+    return copy;
+  }
+
+  function activeFilterChips(f) {
+    const out = [];
+    if (f.search) out.push({ key: 'search', label: 'Search: "' + f.search + '"' });
+    if (f.parish) out.push({ key: 'parish', label: f.parish });
+    if (f.category) out.push({ key: 'category', label: 'Category ' + f.category });
+    if (f.access) out.push({ key: 'access', label: 'Accessible bathroom' });
+    return out;
+  }
+
+  function clearFilter(key) {
+    if (key === 'search') { const el = document.getElementById('filter-search'); if (el) el.value = ''; }
+    if (key === 'parish') { const el = document.getElementById('filter-parish'); if (el) el.value = ''; }
+    if (key === 'category') { const el = document.getElementById('cat-any'); if (el) el.checked = true; }
+    if (key === 'access') { const el = document.getElementById('filter-access'); if (el) el.checked = false; }
+  }
+
+  function clearAllFilters() {
+    clearFilter('search');
+    clearFilter('parish');
+    clearFilter('category');
+    clearFilter('access');
+  }
+
+  function renderActiveFilters(f) {
+    const wrap = document.getElementById('active-filters');
+    if (!wrap) return;
+    const chips = activeFilterChips(f);
+    if (chips.length === 0) {
+      wrap.hidden = true;
+      wrap.innerHTML = '';
+      return;
+    }
+    wrap.hidden = false;
+    const chipHtml = chips.map(function (x) {
+      return '<button type="button" class="active-filter__chip" data-key="' + escapeHtml(x.key) + '">' +
+        escapeHtml(x.label) +
+        ' <span aria-hidden="true">×</span>' +
+        '<span class="govbb-visually-hidden"> — remove</span></button>';
+    }).join('');
+    wrap.innerHTML =
+      '<span class="active-filters__label">Filters:</span>' + chipHtml +
+      '<button type="button" class="active-filters__clear" id="active-filters-clear">Clear all</button>';
   }
 
   function render() {
@@ -140,26 +205,60 @@
     if (!list || !count) return; // not on the find page — nothing to render
 
     const f = readFilters();
-    const matched = filterShelters(SHELTERS, f);
-    matched.sort(function (a, b) {
-      if (a.parish !== b.parish) return a.parish.localeCompare(b.parish);
-      return a.name.localeCompare(b.name);
-    });
+    const matched = sortShelters(filterShelters(SHELTERS, f), f.sort);
+
+    renderActiveFilters(f);
+    updateUrl(f);
 
     if (matched.length === 0) {
-      list.innerHTML = `
-        <div class="shelter__empty">
-          <p><strong>No shelters match your filters.</strong></p>
-          <p>Try removing a filter, or call the Department of Emergency Management on <a href="tel:+12464387575" class="govbb-link">438-7575</a> for help.</p>
-        </div>`;
+      list.innerHTML =
+        '<div class="shelter__empty">' +
+          '<p><strong>No shelters match your filters.</strong></p>' +
+          '<p>Try clearing a filter above, or call the Department of Emergency Management on <a href="tel:+12464387575" class="govbb-link">438-7575</a> for help.</p>' +
+        '</div>';
       count.textContent = 'No shelters match your filters';
     } else {
       list.innerHTML = matched.map(renderShelter).join('');
       const total = SHELTERS.length;
       count.textContent = matched.length === total
-        ? `Showing all ${total} shelters`
-        : `Showing ${matched.length} of ${total} shelters`;
+        ? 'Showing all ' + total + ' shelters'
+        : 'Showing ' + matched.length + ' of ' + total + ' shelters';
     }
+  }
+
+  function updateUrl(f) {
+    try {
+      const params = new URLSearchParams();
+      if (f.search) params.set('q', f.search);
+      if (f.parish) params.set('parish', f.parish);
+      if (f.category) params.set('cat', f.category);
+      if (f.access) params.set('access', '1');
+      if (f.sort && f.sort !== 'parish') params.set('sort', f.sort);
+      const qs = params.toString();
+      const url = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+      window.history.replaceState(null, '', url);
+    } catch (e) { /* history API may be unavailable */ }
+  }
+
+  function applyUrlState() {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get('q');
+      const parish = params.get('parish');
+      const cat = params.get('cat');
+      const access = params.get('access');
+      const sort = params.get('sort');
+
+      const searchEl = document.getElementById('filter-search');
+      if (search && searchEl) searchEl.value = search;
+      const parishEl = document.getElementById('filter-parish');
+      if (parish && parishEl) parishEl.value = parish;
+      if (cat === '1') { const el = document.getElementById('cat-1'); if (el) el.checked = true; }
+      else if (cat === '2') { const el = document.getElementById('cat-2'); if (el) el.checked = true; }
+      if (access === '1') { const el = document.getElementById('filter-access'); if (el) el.checked = true; }
+      const sortEl = document.getElementById('filter-sort');
+      if (sort && sortEl) sortEl.value = sort;
+    } catch (e) { /* URLSearchParams unavailable on ancient browsers */ }
   }
 
   function openAccordionFromHash() {
@@ -180,33 +279,59 @@
   }
 
   function bind() {
-    const ids = ['filter-parish', 'filter-access'];
-    ids.forEach(function (id) {
+    ['filter-parish', 'filter-access', 'filter-sort'].forEach(function (id) {
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', render);
     });
+
+    const searchEl = document.getElementById('filter-search');
+    if (searchEl) {
+      let timer;
+      searchEl.addEventListener('input', function () {
+        clearTimeout(timer);
+        timer = setTimeout(render, 150);
+      });
+    }
+
     document.querySelectorAll('input[name="category"]').forEach(function (el) {
       el.addEventListener('change', render);
     });
+
     const resetBtn = document.getElementById('reset-filters');
     if (resetBtn) {
-      resetBtn.addEventListener('click', function () {
-        document.getElementById('filter-parish').value = '';
-        document.getElementById('cat-any').checked = true;
-        document.getElementById('filter-access').checked = false;
+      resetBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        clearAllFilters();
         render();
       });
     }
+
+    // Delegated handler for the active-filter chips and the clear-all link
+    document.addEventListener('click', function (e) {
+      const chip = e.target.closest && e.target.closest('.active-filter__chip');
+      if (chip) {
+        clearFilter(chip.getAttribute('data-key'));
+        render();
+        return;
+      }
+      if (e.target && e.target.id === 'active-filters-clear') {
+        clearAllFilters();
+        render();
+      }
+    });
+
     window.addEventListener('hashchange', openAccordionFromHash);
   }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
+      applyUrlState();
       bind();
       render();
       openAccordionFromHash();
     });
   } else {
+    applyUrlState();
     bind();
     render();
     openAccordionFromHash();

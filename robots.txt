@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://govtech-bb.github.io/Find-an-emergency-shelter/sitemap.xml

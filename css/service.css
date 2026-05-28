@@ -233,12 +233,33 @@
   background: var(--color-red-10);
   border-left: 8px solid var(--color-red-00);
 }
+.notice--info {
+  background: var(--color-blue-10);
+  border-left: 8px solid var(--color-blue-100);
+}
 
 /* Phone-number list */
 .phone-list {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
+}
+
+/* Hurricane terms glossary on the guidance page. */
+.term-list {
+  margin: 0;
+  padding: 0;
+}
+.term-list > dt {
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--spacing-s);
+}
+.term-list > dt:first-child {
+  margin-top: 0;
+}
+.term-list > dd {
+  margin: 0;
+  color: var(--color-text);
 }
 .phone-list__row {
   display: flex;
@@ -395,13 +416,63 @@
 }
 .filter-checkboxes .govbb-checkbox,
 .filter-checkboxes .govbb-radio {
-  width: 2rem;
-  height: 2rem;
+  /* Minimum 44px tap target, slightly smaller than the design system's
+     3rem default so the filter sidebar still fits comfortably. */
+  width: 2.75rem;
+  height: 2.75rem;
 }
 .filter-checkboxes .govbb-checkbox:before,
 .filter-checkboxes .govbb-radio:before {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
+}
+
+/* Active-filters chip row, sits above the results so the user can
+   see at a glance what's narrowing their list, and remove any one
+   chip without hunting in the sidebar. */
+.active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-s);
+}
+.active-filters__label {
+  font-weight: var(--font-weight-bold);
+  margin-right: var(--spacing-xs);
+}
+.active-filter__chip {
+  font: inherit;
+  background: var(--color-blue-10);
+  color: var(--color-text);
+  border: 1px solid var(--color-blue-100);
+  border-radius: 999px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: var(--font-size-caption);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.active-filter__chip:hover {
+  background: #d6dde9;
+}
+.active-filter__chip:focus-visible {
+  outline: 3px solid var(--color-teal-100);
+  outline-offset: 2px;
+}
+.active-filters__clear {
+  font: inherit;
+  background: transparent;
+  border: 0;
+  color: var(--color-link);
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: var(--font-size-caption);
+}
+.active-filters__clear:hover {
+  color: var(--color-link-hover);
 }
 
 /* Skip link */
@@ -431,4 +502,51 @@
   font-size: var(--font-size-h3);
   line-height: var(--line-height-h3);
   margin-bottom: var(--spacing-s);
+}
+
+/* Print: drop the chrome and lay the shelter list out compactly so a
+   user can keep a paper copy on the fridge during hurricane season. */
+@media print {
+  .govbb-official-banner,
+  .govbb-header,
+  .govbb-status-banner,
+  .govbb-breadcrumbs,
+  .govbb-footer,
+  .finder__filters,
+  .emergency-phones,
+  .related-info,
+  .skip-link,
+  #feedback,
+  .back-link {
+    display: none !important;
+  }
+  body {
+    color: #000;
+    background: #fff;
+    font-size: 11pt;
+  }
+  .govbb-container {
+    width: 100%;
+    padding: 0;
+  }
+  h1 { font-size: 22pt; margin-bottom: 4pt; }
+  h2 { font-size: 14pt; margin-block: 12pt 4pt; }
+  h3 { font-size: 12pt; }
+  .service-lede { font-size: 11pt; margin-bottom: 8pt; }
+  .finder__grid { display: block; }
+  .finder__list { display: block; }
+  .shelter {
+    border: 1px solid #999;
+    padding: 6pt 8pt;
+    margin-bottom: 4pt;
+    break-inside: avoid;
+  }
+  .shelter__name { font-size: 11pt; margin: 0; }
+  .shelter__link { color: #000; text-decoration: none; }
+  .shelter__link::after { content: ""; }
+  .shelter__meta { font-size: 10pt; }
+  .shelter__tags { font-size: 9pt; }
+  .tag { background: #eee !important; color: #000 !important; }
+  a { color: #000; text-decoration: none; }
+  .service-source { margin-top: 12pt; font-size: 9pt; }
 }
