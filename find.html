@@ -79,6 +79,18 @@
             <aside class="finder__filters" aria-label="Shelter filters">
               <h2 class="govbb-text-h3">Filters</h2>
 
+              <div class="filter-group">
+                <button type="button" id="use-my-location" class="govbb-btn--secondary use-location-btn">
+                  <svg class="use-location-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+                    <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                  </svg>
+                  Use my location
+                </button>
+                <p id="location-status" class="govbb-hint" hidden></p>
+              </div>
+
               <div class="govbb-form-group filter-group">
                 <label class="govbb-label" for="filter-search">Search by name</label>
                 <div class="govbb-input-wrapper">
@@ -146,6 +158,7 @@
                     <option value="parish">Parish (default)</option>
                     <option value="name">Name</option>
                     <option value="capacity">Largest first</option>
+                    <option value="distance">Nearest first</option>
                   </select>
                   <span class="govbb-select__chevron" aria-hidden="true">
                     <svg viewBox="0 0 12 8"><path d="M6 0 0 8h12z"/></svg>
@@ -671,7 +684,8 @@
         </aside>
 
         <p class="service-source govbb-text-caption">
-          Source: 2026 Emergency Shelter Booklet, Department of Emergency Management.
+          Source: 2026 Emergency Shelter Booklet, Department of Emergency Management.<br>
+          Distance is calculated from the centre of each parish. Parish coordinates © <a href="https://www.openstreetmap.org/copyright" class="govbb-link" rel="noopener">OpenStreetMap</a> contributors.
         </p>
 
 

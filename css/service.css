@@ -205,6 +205,36 @@
   color: var(--color-text-muted);
   font-style: italic;
 }
+
+/* Distance from the user's location, shown when they enable geolocation. */
+.shelter__distance {
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-teal-00);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+.shelter__distance-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* "Use my location" button — sits at the top of the filters. */
+.use-location-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+}
+.use-location-btn__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
 .shelter__empty {
   grid-column: 1 / -1;
   padding: var(--spacing-m);

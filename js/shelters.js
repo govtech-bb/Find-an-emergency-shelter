@@ -1,6 +1,28 @@
 (function () {
   'use strict';
 
+  // Approximate centre coordinates of each Barbados parish, used to estimate
+  // distance from the user to each shelter. Barbados is small (~21 × 14 km)
+  // so parish-centre accuracy is fine for "near me" ordering. Replace with
+  // per-shelter coordinates if DEM publishes them in a future booklet.
+  // Coordinates sourced from OpenStreetMap parish boundary centroids.
+  const PARISH_CENTROIDS = {
+    'Christ Church': { lat: 13.0689, lon: -59.5469 },
+    'St. Andrew':    { lat: 13.2167, lon: -59.5667 },
+    'St. George':    { lat: 13.1564, lon: -59.5294 },
+    'St. James':     { lat: 13.1833, lon: -59.6333 },
+    'St. John':      { lat: 13.1833, lon: -59.4833 },
+    'St. Joseph':    { lat: 13.2167, lon: -59.5500 },
+    'St. Lucy':      { lat: 13.3000, lon: -59.6167 },
+    'St. Michael':   { lat: 13.1000, lon: -59.6167 },
+    'St. Peter':     { lat: 13.2667, lon: -59.6333 },
+    'St. Philip':    { lat: 13.1500, lon: -59.4500 },
+    'St. Thomas':    { lat: 13.1833, lon: -59.5833 }
+  };
+
+  // Set when the user grants location access; null otherwise.
+  let USER_LOCATION = null;
+
   // Shelter data extracted from the 2026 Emergency Shelter Booklet.
   const SHELTERS = [
     { name: 'Blackman and Gollop Primary School', parish: 'Christ Church', category: 1, ownership: 'Public', capacity: 80, water: true, access: true, notes: '' },
@@ -86,6 +108,70 @@
     return 'https://www.google.com/maps/search/?api=1&query=' + q;
   }
 
+  // Great-circle distance between two {lat, lon} points in kilometres.
+  function haversineKm(a, b) {
+    const R = 6371; // Earth radius in km
+    const toRad = function (d) { return d * Math.PI / 180; };
+    const dLat = toRad(b.lat - a.lat);
+    const dLon = toRad(b.lon - a.lon);
+    const lat1 = toRad(a.lat);
+    const lat2 = toRad(b.lat);
+    const x = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    return 2 * R * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
+  }
+
+  function shelterDistance(s) {
+    if (!USER_LOCATION) return null;
+    const c = PARISH_CENTROIDS[s.parish];
+    if (!c) return null;
+    return haversineKm(USER_LOCATION, c);
+  }
+
+  function formatDistance(km) {
+    if (km == null) return '';
+    if (km < 1) return Math.round(km * 1000) + ' m away';
+    if (km < 10) return km.toFixed(1) + ' km away';
+    return Math.round(km) + ' km away';
+  }
+
+  function setLocationStatus(message) {
+    const el = document.getElementById('location-status');
+    if (!el) return;
+    if (message) {
+      el.textContent = message;
+      el.hidden = false;
+    } else {
+      el.textContent = '';
+      el.hidden = true;
+    }
+  }
+
+  function requestLocation() {
+    if (!navigator.geolocation) {
+      setLocationStatus('Your device does not support location.');
+      return;
+    }
+    setLocationStatus('Finding your location…');
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        USER_LOCATION = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+        setLocationStatus('Sorted by distance from your location. Distances are to the centre of each parish.');
+        const sortEl = document.getElementById('filter-sort');
+        if (sortEl) sortEl.value = 'distance';
+        render();
+      },
+      function (err) {
+        let msg = 'Could not get your location.';
+        if (err && err.code === 1) msg = 'You blocked location access. Allow location in your browser to sort by distance.';
+        else if (err && err.code === 2) msg = 'Your location is unavailable.';
+        else if (err && err.code === 3) msg = 'The location request timed out.';
+        setLocationStatus(msg);
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+    );
+  }
+
   function renderShelter(s) {
     const tags = [
       `<span class="tag tag--cat${s.category}">Category ${s.category}</span>`,
@@ -93,6 +179,11 @@
       s.water ? '<span class="tag tag--water">Potable water</span>' : '',
       !s.water ? '<span class="tag tag--no-water">No potable water</span>' : ''
     ].filter(Boolean).join('');
+
+    const distance = shelterDistance(s);
+    const distanceHtml = distance !== null
+      ? `<p class="shelter__distance" aria-label="Distance from your location"><svg class="shelter__distance-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>${escapeHtml(formatDistance(distance))}</p>`
+      : '';
 
     const notes = s.notes
       ? `<p class="shelter__notes">${escapeHtml(s.notes)}</p>`
@@ -109,6 +200,7 @@
           </a>
         </h3>
         <p class="shelter__meta">${escapeHtml(s.parish)} &middot; ${s.ownership === 'Public' ? 'Public' : 'Privately owned'} &middot; Holds up to ${s.capacity} people</p>
+        ${distanceHtml}
         <div class="shelter__tags">${tags}</div>
         ${notes}
       </article>
@@ -146,6 +238,14 @@
       copy.sort(function (a, b) { return a.name.localeCompare(b.name); });
     } else if (sort === 'capacity') {
       copy.sort(function (a, b) { return b.capacity - a.capacity; });
+    } else if (sort === 'distance' && USER_LOCATION) {
+      copy.sort(function (a, b) {
+        const da = shelterDistance(a);
+        const db = shelterDistance(b);
+        if (da == null) return 1;
+        if (db == null) return -1;
+        return da - db;
+      });
     } else {
       copy.sort(function (a, b) {
         if (a.parish !== b.parish) return a.parish.localeCompare(b.parish);
@@ -279,10 +379,26 @@
   }
 
   function bind() {
-    ['filter-parish', 'filter-access', 'filter-sort'].forEach(function (id) {
+    ['filter-parish', 'filter-access'].forEach(function (id) {
       const el = document.getElementById(id);
       if (el) el.addEventListener('change', render);
     });
+
+    const sortEl = document.getElementById('filter-sort');
+    if (sortEl) {
+      sortEl.addEventListener('change', function () {
+        if (sortEl.value === 'distance' && !USER_LOCATION) {
+          requestLocation();
+        } else {
+          render();
+        }
+      });
+    }
+
+    const locBtn = document.getElementById('use-my-location');
+    if (locBtn) {
+      locBtn.addEventListener('click', requestLocation);
+    }
 
     const searchEl = document.getElementById('filter-search');
     if (searchEl) {
