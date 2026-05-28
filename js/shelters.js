@@ -34,7 +34,7 @@
     { name: 'St. Silas Primary School', parish: 'St. James', category: 1, ownership: 'Public', capacity: 40, water: true, access: false, notes: '' },
     { name: 'The Lodge School', parish: 'St. John', category: 1, ownership: 'Public', capacity: 195, water: true, access: true, notes: '' },
     { name: 'Mount Tabor Primary School', parish: 'St. John', category: 1, ownership: 'Public', capacity: 40, water: true, access: false, notes: '' },
-    { name: 'Tamarind Hall Branch Library (Eric Holder Municipal Complex)', parish: 'St. Joseph', category: 1, ownership: 'Public', capacity: 54, water: true, access: true, notes: 'Only used in the event of a hurricane' },
+    { name: 'Tamarind Hall Branch Library (Eric Holder Municipal Complex)', parish: 'St. Joseph', category: 1, ownership: 'Public', capacity: 54, water: true, access: true, notes: '' },
     { name: 'Ignatius Byer Primary School', parish: 'St. Lucy', category: 1, ownership: 'Public', capacity: 35, water: true, access: false, notes: '' },
     { name: 'Combermere School', parish: 'St. Michael', category: 1, ownership: 'Public', capacity: 100, water: true, access: true, notes: '' },
     { name: 'George Lamming Primary School', parish: 'St. Michael', category: 1, ownership: 'Public', capacity: 79, water: true, access: true, notes: '' },
@@ -91,7 +91,7 @@
     { name: "St. Clement's Centre (St. Clement's Anglican Church)", parish: 'St. Lucy', category: 2, ownership: 'Privately Owned', capacity: 30, water: true, access: false, notes: '' },
     { name: 'Dalkeith Methodist Church', parish: 'St. Michael', category: 2, ownership: 'Privately Owned', capacity: 34, water: true, access: false, notes: '' },
     { name: "People's Cathedral Primary", parish: 'St. Michael', category: 2, ownership: 'Privately Owned', capacity: 60, water: true, access: false, notes: '' },
-    { name: 'The Salvation Army Lighthouse Centre', parish: 'St. Peter', category: 2, ownership: 'Privately Owned', capacity: 12, water: false, access: false, notes: 'Women & Children Only' },
+    { name: 'The Salvation Army Lighthouse Centre', parish: 'St. Peter', category: 2, ownership: 'Privately Owned', capacity: 12, water: false, access: false, notes: '', restriction: 'Women and children only' },
     { name: 'St. Philip-the-Less Anglican Church', parish: 'St. Peter', category: 2, ownership: 'Privately Owned', capacity: 45, water: false, access: false, notes: '' },
     { name: 'Gemswick Nazarene Church', parish: 'St. Philip', category: 2, ownership: 'Privately Owned', capacity: 45, water: false, access: false, notes: '' },
     { name: "St. Catherine's Anglican Church", parish: 'St. Philip', category: 2, ownership: 'Privately Owned', capacity: 45, water: true, access: false, notes: '' }
@@ -121,6 +121,11 @@
     return 2 * R * Math.atan2(Math.sqrt(x), Math.sqrt(1 - x));
   }
 
+  // Largest possible distance between any two points in Barbados is ~30 km.
+  // If the user is further than this from every parish centroid, they are
+  // not on the island and parish-centre distances are meaningless.
+  const MAX_PLAUSIBLE_DISTANCE_KM = 50;
+
   function shelterDistance(s) {
     if (!USER_LOCATION) return null;
     const c = PARISH_CENTROIDS[s.parish];
@@ -128,11 +133,20 @@
     return haversineKm(USER_LOCATION, c);
   }
 
+  function userIsOnIsland() {
+    if (!USER_LOCATION) return false;
+    let min = Infinity;
+    for (const parish in PARISH_CENTROIDS) {
+      const d = haversineKm(USER_LOCATION, PARISH_CENTROIDS[parish]);
+      if (d < min) min = d;
+    }
+    return min <= MAX_PLAUSIBLE_DISTANCE_KM;
+  }
+
   function formatDistance(km) {
     if (km == null) return '';
-    if (km < 1) return Math.round(km * 1000) + ' m away';
-    if (km < 10) return km.toFixed(1) + ' km away';
-    return Math.round(km) + ' km away';
+    if (km < 0.5) return 'In your parish';
+    return km.toFixed(1) + ' km from your parish';
   }
 
   function setLocationStatus(message) {
@@ -147,38 +161,83 @@
     }
   }
 
+  function resetSortToParish() {
+    const sortEl = document.getElementById('filter-sort');
+    if (sortEl && sortEl.value === 'distance') sortEl.value = 'parish';
+  }
+
+  function clearLocation() {
+    USER_LOCATION = null;
+    resetSortToParish();
+    setLocationStatus(null);
+    render();
+  }
+
   function requestLocation() {
     if (!navigator.geolocation) {
-      setLocationStatus('Your device does not support location.');
+      setLocationStatus('Your device does not support location. ' +
+        'You can still filter by parish.');
+      resetSortToParish();
+      render();
       return;
     }
     setLocationStatus('Finding your location…');
     navigator.geolocation.getCurrentPosition(
       function (pos) {
         USER_LOCATION = { lat: pos.coords.latitude, lon: pos.coords.longitude };
-        setLocationStatus('Sorted by distance from your location. Distances are to the centre of each parish.');
+        if (!userIsOnIsland()) {
+          USER_LOCATION = null;
+          setLocationStatus('You appear to be outside Barbados, so distance ' +
+            'isn\'t meaningful. Filter by parish instead.');
+          resetSortToParish();
+          render();
+          return;
+        }
+        setLocationStatus(
+          'Sorted by distance from your parish. ' +
+          'Two shelters in the same parish show the same distance.'
+        );
         const sortEl = document.getElementById('filter-sort');
         if (sortEl) sortEl.value = 'distance';
         render();
       },
       function (err) {
-        let msg = 'Could not get your location.';
-        if (err && err.code === 1) msg = 'You blocked location access. Allow location in your browser to sort by distance.';
-        else if (err && err.code === 2) msg = 'Your location is unavailable.';
-        else if (err && err.code === 3) msg = 'The location request timed out.';
+        let msg = 'Could not get your location. Filter by parish instead.';
+        if (err && err.code === 1) {
+          msg = 'You blocked location access. Allow location in your browser, ' +
+            'or filter by parish instead.';
+        } else if (err && err.code === 2) {
+          msg = 'Your location is unavailable. Filter by parish instead.';
+        } else if (err && err.code === 3) {
+          msg = 'The location request timed out. Filter by parish instead.';
+        }
         setLocationStatus(msg);
+        resetSortToParish();
+        render();
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
     );
   }
 
   function renderShelter(s) {
+    // Amenity tags. Only show "no potable water" as a warning when the
+    // shelter actually lacks water — different visual treatment from positive
+    // tags so a glance doesn't confuse a warning with a feature.
     const tags = [
       `<span class="tag tag--cat${s.category}">Category ${s.category}</span>`,
       s.access ? '<span class="tag tag--access">Accessible bathroom</span>' : '',
-      s.water ? '<span class="tag tag--water">Potable water</span>' : '',
-      !s.water ? '<span class="tag tag--no-water">No potable water</span>' : ''
+      s.water ? '<span class="tag tag--water">Potable water</span>' : ''
     ].filter(Boolean).join('');
+
+    const warningTags = !s.water
+      ? '<span class="tag tag--warning">⚠ No potable water</span>'
+      : '';
+
+    // Eligibility restriction (e.g., women & children only) — critical info,
+    // styled as a red pill so it can't be missed.
+    const restriction = s.restriction
+      ? `<p class="shelter__restriction"><strong>Restricted:</strong> ${escapeHtml(s.restriction)}</p>`
+      : '';
 
     const distance = shelterDistance(s);
     const distanceHtml = distance !== null
@@ -191,17 +250,25 @@
 
     const href = mapsUrl(s.name, s.parish);
 
+    // Activation status. We have no live activation feed, so every shelter
+    // shows "Not currently open" by default. Real services would flip this
+    // to "Open now" via a DEM data feed during an active emergency.
+    const statusHtml =
+      '<p class="shelter__status shelter__status--closed">' +
+        '<span class="shelter__status-dot" aria-hidden="true"></span>' +
+        'Not currently open' +
+      '</p>';
+
     return `
-      <article class="shelter" role="listitem">
+      <article class="shelter${s.restriction ? ' shelter--restricted' : ''}" role="listitem">
+        ${statusHtml}
+        ${restriction}
         <h3 class="shelter__name">
-          <a class="shelter__link" href="${href}" target="_blank" rel="noopener noreferrer">
-            ${escapeHtml(s.name)}
-            <span class="govbb-visually-hidden">(opens in a new tab on Google Maps)</span>
-          </a>
+          <a class="shelter__link" href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>
         </h3>
-        <p class="shelter__meta">${escapeHtml(s.parish)} &middot; ${s.ownership === 'Public' ? 'Public' : 'Privately owned'} &middot; Holds up to ${s.capacity} people</p>
+        <p class="shelter__meta">${escapeHtml(s.parish)}, ${s.ownership === 'Public' ? 'public' : 'privately owned'}, capacity about ${s.capacity}</p>
         ${distanceHtml}
-        <div class="shelter__tags">${tags}</div>
+        <div class="shelter__tags">${tags}${warningTags}</div>
         ${notes}
       </article>
     `;
@@ -313,7 +380,6 @@
     if (matched.length === 0) {
       list.innerHTML =
         '<div class="shelter__empty">' +
-          '<p><strong>No shelters match your filters.</strong></p>' +
           '<p>Try clearing a filter above, or call the Department of Emergency Management on <a href="tel:+12464387575" class="govbb-link">438-7575</a> for help.</p>' +
         '</div>';
       count.textContent = 'No shelters match your filters';

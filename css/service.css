@@ -181,9 +181,67 @@
 .tag--cat2 { background: var(--color-blue-10); }
 .tag--access { background: var(--color-teal-40); }
 .tag--water { background: var(--color-green-40); }
-.tag--no-water { background: var(--color-red-10); }
 .tag--public { background: var(--color-grey-00); }
 .tag--private { background: var(--color-pink-10); }
+
+/* Warning tag — distinct outlined treatment so it can't be confused with
+   a positive amenity at a glance. */
+.tag--warning {
+  background: var(--color-background);
+  color: var(--color-red-00);
+  border: 1.5px solid var(--color-red-00);
+  padding-block: 0;
+}
+
+/* Activation status — every card shows this. Default is "Not currently
+   open". A live DEM feed would flip the class to shelter__status--open. */
+.shelter__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-size-caption-sm);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 0 0 var(--spacing-xs) 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.shelter__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.shelter__status--closed {
+  background: var(--color-grey-00);
+  color: var(--color-text);
+}
+.shelter__status--closed .shelter__status-dot {
+  background: var(--color-mid-grey-00);
+}
+.shelter__status--open {
+  background: var(--color-green-10);
+  color: var(--color-green-00);
+}
+.shelter__status--open .shelter__status-dot {
+  background: var(--color-green-00);
+}
+
+/* Eligibility restriction (Women & Children only, etc.) — critical info
+   styled prominently so it can't be missed. */
+.shelter__restriction {
+  margin: 0;
+  padding: 6px 10px;
+  background: var(--color-red-10);
+  border-left: 4px solid var(--color-red-00);
+  color: var(--color-red-00);
+  font-size: var(--font-size-caption);
+  border-radius: 2px;
+}
+.shelter--restricted {
+  border-color: var(--color-red-00);
+}
 
 .shelter__link {
   color: var(--color-link);

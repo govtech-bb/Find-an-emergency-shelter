@@ -72,23 +72,36 @@ function renderCard(s) {
     `<span class="tag tag--cat${s.category}">Category ${s.category}</span>`,
     s.access ? '<span class="tag tag--access">Accessible bathroom</span>' : '',
     s.water ? '<span class="tag tag--water">Potable water</span>' : '',
-    !s.water ? '<span class="tag tag--no-water">No potable water</span>' : '',
   ]
     .filter(Boolean)
     .join('');
+  const warningTags = !s.water
+    ? '<span class="tag tag--warning">⚠ No potable water</span>'
+    : '';
 
   const notes = s.notes
     ? `\n                <p class="shelter__notes">${escapeHtml(s.notes)}</p>`
     : '';
 
-  return `              <article class="shelter" role="listitem">
+  const restriction = s.restriction
+    ? `\n                <p class="shelter__restriction"><strong>Restricted:</strong> ${escapeHtml(s.restriction)}</p>`
+    : '';
+
+  const status =
+    '<p class="shelter__status shelter__status--closed">' +
+      '<span class="shelter__status-dot" aria-hidden="true"></span>' +
+      'Not currently open' +
+    '</p>';
+
+  return `              <article class="shelter${s.restriction ? ' shelter--restricted' : ''}" role="listitem">
+                ${status}${restriction}
                 <h3 class="shelter__name">
-                  <a class="shelter__link" href="${mapsUrl(s.name, s.parish)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}<span class="govbb-visually-hidden"> (opens in a new tab on Google Maps)</span></a>
+                  <a class="shelter__link" href="${mapsUrl(s.name, s.parish)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>
                 </h3>
-                <p class="shelter__meta">${escapeHtml(s.parish)} &middot; ${
-    s.ownership === 'Public' ? 'Public' : 'Privately owned'
-  } &middot; Holds up to ${s.capacity} people</p>
-                <div class="shelter__tags">${tags}</div>${notes}
+                <p class="shelter__meta">${escapeHtml(s.parish)}, ${
+    s.ownership === 'Public' ? 'public' : 'privately owned'
+  }, capacity about ${s.capacity}</p>
+                <div class="shelter__tags">${tags}${warningTags}</div>${notes}
               </article>`;
 }
 

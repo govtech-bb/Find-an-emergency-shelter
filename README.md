@@ -31,7 +31,7 @@ Shelter information is taken from the **2026 Emergency Shelter Booklet**, publis
 
 The booklet is reviewed and republished annually before the start of hurricane season on 1 June.
 
-**Next review:** 1 May 2027.
+**Next review:** May 1, 2027.
 
 ## Reporting issues with shelter data
 
