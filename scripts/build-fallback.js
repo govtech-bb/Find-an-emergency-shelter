@@ -67,6 +67,18 @@ function mapsUrl(name, parish) {
   return `https://www.google.com/maps/search/?api=1&query=${q}`;
 }
 
+// Load address data so static fallback also shows addresses
+const LOCATIONS = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(
+      path.join(__dirname, '..', 'data', 'shelter-locations.json'),
+      'utf8'
+    ));
+  } catch (e) {
+    return {};
+  }
+})();
+
 function renderCard(s) {
   const tags = [
     `<span class="tag tag--cat${s.category}">Category ${s.category}</span>`,
@@ -93,15 +105,19 @@ function renderCard(s) {
       'Not currently open' +
     '</p>';
 
+  const loc = LOCATIONS[s.name];
+  const address = loc && loc.address
+    ? `\n                <p class="shelter__address">${escapeHtml(loc.address)}</p>`
+    : '';
+
   return `              <article class="shelter${s.restriction ? ' shelter--restricted' : ''}" role="listitem">
                 ${status}${restriction}
-                <h3 class="shelter__name">
-                  <a class="shelter__link" href="${mapsUrl(s.name, s.parish)}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>
-                </h3>
+                <h3 class="shelter__name">${escapeHtml(s.name)}</h3>
                 <p class="shelter__meta">${escapeHtml(s.parish)}, ${
     s.ownership === 'Public' ? 'public' : 'privately owned'
-  }, capacity about ${s.capacity}</p>
+  }, holds up to ${s.capacity} people (booklet planning figure — not live availability)</p>${address}
                 <div class="shelter__tags">${tags}${warningTags}</div>${notes}
+                <p class="shelter__actions"><a class="shelter__link" href="${mapsUrl(s.name, s.parish)}" target="_blank" rel="noopener noreferrer">Get directions on Google Maps</a></p>
               </article>`;
 }
 

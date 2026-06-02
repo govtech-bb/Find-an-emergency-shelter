@@ -1,0 +1,548 @@
+{
+  "Blackman and Gollop Primary School": {
+    "lat": 13.09797,
+    "lon": -59.5572201,
+    "address": "Staple Grove, Christ Church, BB17003",
+    "display_name": "Blackman and Gollop Primary School, Staple Grove, Christ Church, BB17003, Barbados",
+    "osm_id": 481256164,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Gordon Walters Primary School": {
+    "lat": 13.0962666,
+    "lon": -59.4945239,
+    "address": "Highway P, Bright Hill, St. Patrick's",
+    "display_name": "Gordon Walters Primary School, Highway P, Bright Hill, St. Patrick's, Christ Church, BB18046, Barbados",
+    "osm_id": 386265662,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Christopher Primary School": {
+    "lat": 13.0532305,
+    "lon": -59.5177023,
+    "address": "St Christopher's Road, St. Christopher, Hopewell",
+    "display_name": "St. Christopher's Primary School, St Christopher's Road, St. Christopher, Hopewell, Silver Sands, Christ Church, BB17121, Barbados",
+    "osm_id": 386224216,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Cuthbert Moore Primary School": {
+    "lat": 13.1525839,
+    "lon": -59.5649785,
+    "address": "Highway 3, Astoria, Market Hill",
+    "display_name": "Cuthbert Moore Primary School, Highway 3, Astoria, Market Hill, Saint George, BB19011, Barbados",
+    "osm_id": 752856257,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Gordon Greenidge Primary School": {
+    "lat": 13.2292129,
+    "lon": -59.6233299,
+    "address": "Ronald Mapp Highway, Westmoreland, Saint Peter",
+    "display_name": "Gordon Greenidge Primary School, Ronald Mapp Highway, Westmoreland, Saint Peter, BB26015, Barbados",
+    "osm_id": 384833186,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Queens College": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Silas Primary School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "The Lodge School": {
+    "lat": 13.1675413,
+    "lon": -59.4878405,
+    "address": "Highway H, Green Point, Society",
+    "display_name": "The Lodge School, Highway H, Green Point, Society, Saint John, BB20008, Barbados",
+    "osm_id": 467849602,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Mount Tabor Primary School": {
+    "lat": 13.1821049,
+    "lon": -59.5237049,
+    "address": "Mount Tabor Church Road, Mount Tabor, Sherbourne",
+    "display_name": "Mount Tabor Primary School, Mount Tabor Church Road, Mount Tabor, Sherbourne, Saint John, BB20014, Barbados",
+    "osm_id": 729347248,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Tamarind Hall Branch Library (Eric Holder Municipal Complex)": {
+    "lat": 13.1931231,
+    "lon": -59.5437155,
+    "address": "Eric J Holder Municipal Complex, Surinam, Bowling Alley Hill",
+    "display_name": "Tamarind Hall Branch Library, Eric J Holder Municipal Complex, Surinam, Bowling Alley Hill, Saint Joseph, BB20033, Barbados",
+    "osm_id": 858575315,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Ignatius Byer Primary School": {
+    "lat": 13.3091402,
+    "lon": -59.5946079,
+    "address": "Lowlands Road, Lowland, Pie Corner",
+    "display_name": "Ignatius Byer Primary School, Lowlands Road, Lowland, Pie Corner, Saint Lucy, BB27144, Barbados",
+    "osm_id": 1201580142,
+    "osm_type": "way",
+    "confidence": 0.00004063096055538289
+  },
+  "Combermere School": {
+    "lat": 13.1167423,
+    "lon": -59.6021111,
+    "address": "Garlow Path, Bush Hall, Bridgetown",
+    "display_name": "Combermere School, Garlow Path, Bush Hall, Bridgetown, Saint Michael, BB14018, Barbados",
+    "osm_id": 386025429,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "George Lamming Primary School": {
+    "lat": 13.1056377,
+    "lon": -59.6019488,
+    "address": "Bridge Road, Carrington Village, Saint Michael",
+    "display_name": "George Lamming Primary School, Bridge Road, Carrington Village, Saint Michael, BB14018, Barbados",
+    "osm_id": 508273623,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Harrison College": {
+    "lat": 13.1001042,
+    "lon": -59.6100881,
+    "address": "Crumpton's Street, Bridgetown, Saint Michael",
+    "display_name": "Harrison College, Crumpton's Street, Bridgetown, Saint Michael, BB11015, Barbados",
+    "osm_id": 481259863,
+    "osm_type": "way",
+    "confidence": 0.29684236187219576
+  },
+  "Lloyd Erskine Sandiford Centre": {
+    "lat": 13.1039434,
+    "lon": -59.5830398,
+    "address": "Two Mile Hill, Bridgetown, Saint Michael",
+    "display_name": "Lloyd Erskine Sandiford Centre, Two Mile Hill, Bridgetown, Saint Michael, BB11093, Barbados",
+    "osm_id": 384362092,
+    "osm_type": "way",
+    "confidence": 0.17283327415591612
+  },
+  "The University of the West Indies (Sagicor Building)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Westbury Primary School": {
+    "lat": 13.1055624,
+    "lon": -59.6199231,
+    "address": "Westbury Road, New Orleans, Bridgetown",
+    "display_name": "Westbury Primary School, Westbury Road, New Orleans, Bridgetown, Saint Michael, BB11028, Barbados",
+    "osm_id": 339099056,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Coleridge and Parry School": {
+    "lat": 13.2598169,
+    "lon": -59.6383268,
+    "address": "Douglas Road, Speightstown, Saint Peter",
+    "display_name": "Coleridge and Parry School, Douglas Road, Speightstown, Saint Peter, BB26015, Barbados",
+    "osm_id": 327697302,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Lester Vaughan School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Hillaby Seventh Day Adventist Church": {
+    "lat": 13.2128905,
+    "lon": -59.5878026,
+    "address": "Highway D, Gregg Farm, Hillaby",
+    "display_name": "Hillaby Seventh Day Adventist Church, Highway D, Gregg Farm, Hillaby, Saint Andrew, BB25049, Barbados",
+    "osm_id": 725747825,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Ellerton Wesleyan Holiness Church": {
+    "lat": 13.1290645,
+    "lon": -59.5411593,
+    "address": "Eustace Lashley Road, Ellerton, Saint George",
+    "display_name": "Ellerton Wesleyan Holiness Church, Eustace Lashley Road, Ellerton, Saint George, BB19004, Barbados",
+    "osm_id": 864219586,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Church of God Orange Hill": {
+    "lat": 13.2041326,
+    "lon": -59.6051784,
+    "address": "Endeavour Cul-de-sac, Endeavour, Orange Hill",
+    "display_name": "Orange Hill Church of God, Endeavour Cul-de-sac, Endeavour, Orange Hill, Saint James, BB24022, Barbados",
+    "osm_id": 385009450,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Connell Town Pentecostal House of Prayer": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "William Donald George Parish Centre (St. Lucy Parish Church)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Black Rock Seventh Day Adventist Church": {
+    "lat": 13.1282351,
+    "lon": -59.6258395,
+    "address": "Ellerslie School Road, Black Rock, Saint Michael",
+    "display_name": "Black Rock Seventh Day Adventist Church, Ellerslie School Road, Black Rock, Saint Michael, BB23026, Barbados",
+    "osm_id": 725914843,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Faith Wesleyan Holiness Church": {
+    "lat": 13.1369325,
+    "lon": -59.592313,
+    "address": "Highway E, Lears Court, Jackmans",
+    "display_name": "Faith Wesleyan Holiness Church, Highway E, Lears Court, Jackmans, Saint Michael, BB11005, Barbados",
+    "osm_id": 727876362,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Barnabas Senior Citizens Centre": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Ruby Church of the Nazarene": {
+    "lat": 13.1274867,
+    "lon": -59.4479606,
+    "address": "Highway 5, Ruby Tenantry, Robinsons",
+    "display_name": "Ruby Church of the Nazarene, Highway 5, Ruby Tenantry, Robinsons, Ruby, Saint Philip, BB18075, Barbados",
+    "osm_id": 468189031,
+    "osm_type": "way",
+    "confidence": 0.00003750133516437045
+  },
+  "Six Roads Church of Christ": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Christ Church Foundation School": {
+    "lat": 13.0661926,
+    "lon": -59.540469,
+    "address": "Church Hill Main Road, Oistins, Christ Church",
+    "display_name": "Christ Church Foundation School, Church Hill Main Road, Oistins, Christ Church, BB17101, Barbados",
+    "osm_id": 389449404,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Deighton Griffith School": {
+    "lat": 13.079015,
+    "lon": -59.5522755,
+    "address": "Kingsland, Christ Church, BB15028",
+    "display_name": "Deighton Griffith Secondary School, Kingsland, Christ Church, BB15028, Barbados",
+    "osm_id": 482736483,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Bartholomew Primary School": {
+    "lat": 13.0749627,
+    "lon": -59.5141774,
+    "address": "Parish Land Road, Parish Land, Chancery Lane",
+    "display_name": "St.Bartholomew Primary School, Parish Land Road, Parish Land, Chancery Lane, Christ Church, BB17101, Barbados",
+    "osm_id": 1462717907,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Ellerton Primary School": {
+    "lat": 13.1317408,
+    "lon": -59.5411571,
+    "address": "Ellerton Road, Ellerton, Saint George",
+    "display_name": "Ellerton Primary School, Ellerton Road, Ellerton, Saint George, BB19004, Barbados",
+    "osm_id": 729740280,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. George Secondary": {
+    "lat": 13.1272196,
+    "lon": -59.563281,
+    "address": "Highway W, Constant, Saint George",
+    "display_name": "St. George Secondary School, Highway W, Constant, Saint George, BB19025, Barbados",
+    "osm_id": 501452223,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "West Terrace Primary School": {
+    "lat": 13.1450271,
+    "lon": -59.6311782,
+    "address": "Wanstead Drive, West Terrace, Bagatelle",
+    "display_name": "West Terrace Primary School, Wanstead Drive, West Terrace, Bagatelle, Saint James, BB23036, Barbados",
+    "osm_id": 385057317,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Margaret's Primary School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Grantley Adams Memorial": {
+    "lat": 13.1882724,
+    "lon": -59.5429165,
+    "address": "Highway 3, Casuarina Hill, Horse Hill",
+    "display_name": "Grantley Adams Memorial School, Highway 3, Casuarina Hill, Horse Hill, Blackmans, Saint Joseph, BB20033, Barbados",
+    "osm_id": 749942265,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Bernard Primary School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Joseph Primary School": {
+    "lat": 13.1937681,
+    "lon": -59.5447443,
+    "address": "Highway 3, Casuarina Hill, Horse Hill",
+    "display_name": "St. Joseph Primary School, Highway 3, Casuarina Hill, Horse Hill, Bowling Alley Hill, Saint Joseph, BB20033, Barbados",
+    "osm_id": 751999150,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Daryll Jordan Secondary": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Selah Primary School": {
+    "lat": 13.3142642,
+    "lon": -59.6351882,
+    "address": "Highway 1B, Content, Greenidge",
+    "display_name": "Selah Primary School, Highway 1B, Content, Greenidge, Saint Lucy, BB27075, Barbados",
+    "osm_id": 753067266,
+    "osm_type": "way",
+    "confidence": 0.00004063096055538289
+  },
+  "Barbados Community College (Commerce Division)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Bay Primary School": {
+    "lat": 13.0891058,
+    "lon": -59.6023449,
+    "address": "Bay Gardens, Bayland, Saint Michael",
+    "display_name": "Bay Primary School, Bay Gardens, Bayland, Saint Michael, BB11114, Barbados",
+    "osm_id": 1100970457,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "The Ellerslie School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Grazettes Primary School": {
+    "lat": 13.1310222,
+    "lon": -59.6177211,
+    "address": "Denton Road, White Hall, Saint Michael",
+    "display_name": "Grazettes Primary School, Denton Road, White Hall, Saint Michael, BB23021, Barbados",
+    "osm_id": 537442194,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Lawrence T. Gay Memorial": {
+    "lat": 13.1236502,
+    "lon": -59.6089401,
+    "address": "Spooners Hill Main Road, Spooners Hill, Saint Michael",
+    "display_name": "Lawrence T Gay Memorial School, Spooners Hill Main Road, Spooners Hill, Saint Michael, BB14018, Barbados",
+    "osm_id": 508273635,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Luther Thorne Memorial": {
+    "lat": 13.0904114,
+    "lon": -59.5849019,
+    "address": "Wildey Road, Wildey Industrial Park, Wildey",
+    "display_name": "Luther Thorne Memorial Primary School, Wildey Road, Wildey Industrial Park, Wildey, Bridgetown, Saint Michael, BB11093, Barbados",
+    "osm_id": 384270307,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Parkinson Memorial School": {
+    "lat": 13.0981946,
+    "lon": -59.5810359,
+    "address": "Pine East West Boulevard, The Pine, Saint Michael",
+    "display_name": "Parkinson Memorial Secondary School, Pine East West Boulevard, The Pine, Saint Michael, BB11093, Barbados",
+    "osm_id": 384351798,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Springer Memorial School": {
+    "lat": 13.1016624,
+    "lon": -59.5960977,
+    "address": "Government Hill, Saint Michael, BB14004",
+    "display_name": "Springer Memorial School, Government Hill, Saint Michael, BB14004, Barbados",
+    "osm_id": 384377266,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Ambrose Primary School": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Leonard's Boys' School": {
+    "lat": 13.11187,
+    "lon": -59.617969,
+    "address": "President Kennedy Drive, Eagle Hall, Saint Michael",
+    "display_name": "St. Leonard's Boys School, President Kennedy Drive, Eagle Hall, Saint Michael, BB11028, Barbados",
+    "osm_id": 481259865,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "The St. Michael School": {
+    "lat": 13.0968678,
+    "lon": -59.6047107,
+    "address": "Martindales Road, Bridgetown, Saint Michael",
+    "display_name": "The St. Michael School, Martindales Road, Bridgetown, Saint Michael, BB11137, Barbados",
+    "osm_id": 385913053,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Princess Margaret Secondary": {
+    "lat": 13.1190052,
+    "lon": -59.4752183,
+    "address": "Highway 5, Six Roads, Saint Philip",
+    "display_name": "Princess Margaret Secondary School, Highway 5, Six Roads, Saint Philip, BB18042, Barbados",
+    "osm_id": 383795663,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Reynold Weekes Primary School": {
+    "lat": 13.1089569,
+    "lon": -59.4699699,
+    "address": "Four Roads, Saint Philip, BB18053",
+    "display_name": "Reynold Weekes Primary School, Four Roads, Saint Philip, BB18053, Barbados",
+    "osm_id": 383641819,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Sharon Primary School": {
+    "lat": 13.1519468,
+    "lon": -59.6021556,
+    "address": "Jackson Arthur Seat Road, Arthur Seat, Saint Thomas",
+    "display_name": "Sharon Primary School, Jackson Arthur Seat Road, Arthur Seat, Saint Thomas, BB22022, Barbados",
+    "osm_id": 1052402411,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Welches Primary School": {
+    "lat": 13.1569988,
+    "lon": -59.6127065,
+    "address": "Highway 2A, Welches, Saint Thomas",
+    "display_name": "Welches Primary School, Highway 2A, Welches, Saint Thomas, BB22025, Barbados",
+    "osm_id": 741618457,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Hawthorn Methodist Church": {
+    "lat": 13.0739936,
+    "lon": -59.5821481,
+    "address": "Worthing, Christ Church, BB15137",
+    "display_name": "Hawthorn Memorial Methodist Church, Worthing, Christ Church, BB15137, Barbados",
+    "osm_id": 485701310,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "Ivan Harewood Centre (Christ Church Parish Church)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Salvation Army Church (Wotton)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Christopher Anglican Church": {
+    "lat": 13.050674,
+    "lon": -59.5195226,
+    "address": "Enterprise Coast Road, Green Garden, Goodland",
+    "display_name": "St. Christopher's Anglican Church, Enterprise Coast Road, Green Garden, Goodland, Silver Sands, Christ Church, BB17121, Barbados",
+    "osm_id": 386224219,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Matthias Anglican Church": {
+    "lat": 13.0759679,
+    "lon": -59.5994563,
+    "address": "St. Matthias Road, St. Matthias, Hastings",
+    "display_name": "St Matthias Anglican Church, St. Matthias Road, St. Matthias, Hastings, Christ Church, BB15156, Barbados",
+    "osm_id": 485702059,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. George Anglican Church": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Salvation Army Checker Hall Church": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Clement's Centre (St. Clement's Anglican Church)": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "Dalkeith Methodist Church": {
+    "lat": 13.0875931,
+    "lon": -59.6001907,
+    "address": "Dalkeith Hill, Brittons Hill, Saint Michael",
+    "display_name": "Dalkeith Methodist Church, Dalkeith Hill, Brittons Hill, Saint Michael, BB14004, Barbados",
+    "osm_id": 384253243,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "People's Cathedral Primary": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "The Salvation Army Lighthouse Centre": {
+    "lat": null,
+    "lon": null,
+    "address": null
+  },
+  "St. Philip-the-Less Anglican Church": {
+    "lat": 13.2844894,
+    "lon": -59.5819329,
+    "address": "Highway B1, Mount Stepney, Saint Peter",
+    "display_name": "St. Philip The Less Anglican Church, Highway B1, Mount Stepney, Saint Peter, BB25012, Barbados",
+    "osm_id": 863089856,
+    "osm_type": "way",
+    "confidence": 0.00004063096055538289
+  },
+  "Gemswick Nazarene Church": {
+    "lat": 13.0844603,
+    "lon": -59.4686072,
+    "address": "Gemswick, Saint Philip, BB18093",
+    "display_name": "Gemswick Church of the Nazarene, Gemswick, Saint Philip, BB18093, Barbados",
+    "osm_id": 1170427551,
+    "osm_type": "way",
+    "confidence": 0.00006289692530704231
+  },
+  "St. Catherine's Anglican Church": {
+    "lat": 13.156438,
+    "lon": -59.441359,
+    "address": "St. Catherine Road, St. Catherine's, Saint Philip",
+    "display_name": "St. Catherine's Anglican Church, St. Catherine Road, St. Catherine's, Saint Philip, BB18034, Barbados",
+    "osm_id": 729328582,
+    "osm_type": "way",
+    "confidence": 0.00003750133516437045
+  }
+}

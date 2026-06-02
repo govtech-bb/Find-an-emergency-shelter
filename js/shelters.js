@@ -23,6 +23,62 @@
   // Set when the user grants location access; null otherwise.
   let USER_LOCATION = null;
 
+  // Per-shelter coordinates and addresses, geocoded from OpenStreetMap via
+  // Nominatim (see scripts/geocode-shelters.js). 49 of 70 shelters have a
+  // confident match; the rest fall back to the parish centroid for distance
+  // and show no address on the card. © OpenStreetMap contributors.
+  const SHELTER_LOCATIONS = {
+    "Blackman and Gollop Primary School": { lat: 13.09797, lon: -59.5572201, address: "Staple Grove, Christ Church, BB17003" },
+    "Gordon Walters Primary School": { lat: 13.0962666, lon: -59.4945239, address: "Highway P, Bright Hill, St. Patrick's" },
+    "St. Christopher Primary School": { lat: 13.0532305, lon: -59.5177023, address: "St Christopher's Road, St. Christopher, Hopewell" },
+    "Cuthbert Moore Primary School": { lat: 13.1525839, lon: -59.5649785, address: "Highway 3, Astoria, Market Hill" },
+    "Gordon Greenidge Primary School": { lat: 13.2292129, lon: -59.6233299, address: "Ronald Mapp Highway, Westmoreland, Saint Peter" },
+    "The Lodge School": { lat: 13.1675413, lon: -59.4878405, address: "Highway H, Green Point, Society" },
+    "Mount Tabor Primary School": { lat: 13.1821049, lon: -59.5237049, address: "Mount Tabor Church Road, Mount Tabor, Sherbourne" },
+    "Tamarind Hall Branch Library (Eric Holder Municipal Complex)": { lat: 13.1931231, lon: -59.5437155, address: "Eric J Holder Municipal Complex, Surinam, Bowling Alley Hill" },
+    "Ignatius Byer Primary School": { lat: 13.3091402, lon: -59.5946079, address: "Lowlands Road, Lowland, Pie Corner" },
+    "Combermere School": { lat: 13.1167423, lon: -59.6021111, address: "Garlow Path, Bush Hall, Bridgetown" },
+    "George Lamming Primary School": { lat: 13.1056377, lon: -59.6019488, address: "Bridge Road, Carrington Village, Saint Michael" },
+    "Harrison College": { lat: 13.1001042, lon: -59.6100881, address: "Crumpton's Street, Bridgetown, Saint Michael" },
+    "Lloyd Erskine Sandiford Centre": { lat: 13.1039434, lon: -59.5830398, address: "Two Mile Hill, Bridgetown, Saint Michael" },
+    "Westbury Primary School": { lat: 13.1055624, lon: -59.6199231, address: "Westbury Road, New Orleans, Bridgetown" },
+    "Coleridge and Parry School": { lat: 13.2598169, lon: -59.6383268, address: "Douglas Road, Speightstown, Saint Peter" },
+    "Hillaby Seventh Day Adventist Church": { lat: 13.2128905, lon: -59.5878026, address: "Highway D, Gregg Farm, Hillaby" },
+    "Ellerton Wesleyan Holiness Church": { lat: 13.1290645, lon: -59.5411593, address: "Eustace Lashley Road, Ellerton, Saint George" },
+    "Church of God Orange Hill": { lat: 13.2041326, lon: -59.6051784, address: "Endeavour Cul-de-sac, Endeavour, Orange Hill" },
+    "Black Rock Seventh Day Adventist Church": { lat: 13.1282351, lon: -59.6258395, address: "Ellerslie School Road, Black Rock, Saint Michael" },
+    "Faith Wesleyan Holiness Church": { lat: 13.1369325, lon: -59.592313, address: "Highway E, Lears Court, Jackmans" },
+    "Ruby Church of the Nazarene": { lat: 13.1274867, lon: -59.4479606, address: "Highway 5, Ruby Tenantry, Robinsons" },
+    "Christ Church Foundation School": { lat: 13.0661926, lon: -59.540469, address: "Church Hill Main Road, Oistins, Christ Church" },
+    "Deighton Griffith School": { lat: 13.079015, lon: -59.5522755, address: "Kingsland, Christ Church, BB15028" },
+    "St. Bartholomew Primary School": { lat: 13.0749627, lon: -59.5141774, address: "Parish Land Road, Parish Land, Chancery Lane" },
+    "Ellerton Primary School": { lat: 13.1317408, lon: -59.5411571, address: "Ellerton Road, Ellerton, Saint George" },
+    "St. George Secondary": { lat: 13.1272196, lon: -59.563281, address: "Highway W, Constant, Saint George" },
+    "West Terrace Primary School": { lat: 13.1450271, lon: -59.6311782, address: "Wanstead Drive, West Terrace, Bagatelle" },
+    "Grantley Adams Memorial": { lat: 13.1882724, lon: -59.5429165, address: "Highway 3, Casuarina Hill, Horse Hill" },
+    "St. Joseph Primary School": { lat: 13.1937681, lon: -59.5447443, address: "Highway 3, Casuarina Hill, Horse Hill" },
+    "Selah Primary School": { lat: 13.3142642, lon: -59.6351882, address: "Highway 1B, Content, Greenidge" },
+    "Bay Primary School": { lat: 13.0891058, lon: -59.6023449, address: "Bay Gardens, Bayland, Saint Michael" },
+    "Grazettes Primary School": { lat: 13.1310222, lon: -59.6177211, address: "Denton Road, White Hall, Saint Michael" },
+    "Lawrence T. Gay Memorial": { lat: 13.1236502, lon: -59.6089401, address: "Spooners Hill Main Road, Spooners Hill, Saint Michael" },
+    "Luther Thorne Memorial": { lat: 13.0904114, lon: -59.5849019, address: "Wildey Road, Wildey Industrial Park, Wildey" },
+    "Parkinson Memorial School": { lat: 13.0981946, lon: -59.5810359, address: "Pine East West Boulevard, The Pine, Saint Michael" },
+    "Springer Memorial School": { lat: 13.1016624, lon: -59.5960977, address: "Government Hill, Saint Michael, BB14004" },
+    "St. Leonard's Boys' School": { lat: 13.11187, lon: -59.617969, address: "President Kennedy Drive, Eagle Hall, Saint Michael" },
+    "The St. Michael School": { lat: 13.0968678, lon: -59.6047107, address: "Martindales Road, Bridgetown, Saint Michael" },
+    "Princess Margaret Secondary": { lat: 13.1190052, lon: -59.4752183, address: "Highway 5, Six Roads, Saint Philip" },
+    "Reynold Weekes Primary School": { lat: 13.1089569, lon: -59.4699699, address: "Four Roads, Saint Philip, BB18053" },
+    "Sharon Primary School": { lat: 13.1519468, lon: -59.6021556, address: "Jackson Arthur Seat Road, Arthur Seat, Saint Thomas" },
+    "Welches Primary School": { lat: 13.1569988, lon: -59.6127065, address: "Highway 2A, Welches, Saint Thomas" },
+    "Hawthorn Methodist Church": { lat: 13.0739936, lon: -59.5821481, address: "Worthing, Christ Church, BB15137" },
+    "St. Christopher Anglican Church": { lat: 13.050674, lon: -59.5195226, address: "Enterprise Coast Road, Green Garden, Goodland" },
+    "St. Matthias Anglican Church": { lat: 13.0759679, lon: -59.5994563, address: "St. Matthias Road, St. Matthias, Hastings" },
+    "Dalkeith Methodist Church": { lat: 13.0875931, lon: -59.6001907, address: "Dalkeith Hill, Brittons Hill, Saint Michael" },
+    "St. Philip-the-Less Anglican Church": { lat: 13.2844894, lon: -59.5819329, address: "Highway B1, Mount Stepney, Saint Peter" },
+    "Gemswick Nazarene Church": { lat: 13.0844603, lon: -59.4686072, address: "Gemswick, Saint Philip, BB18093" },
+    "St. Catherine's Anglican Church": { lat: 13.156438, lon: -59.441359, address: "St. Catherine Road, St. Catherine's, Saint Philip" },
+  };
+
   // Shelter data extracted from the 2026 Emergency Shelter Booklet.
   const SHELTERS = [
     { name: 'Blackman and Gollop Primary School', parish: 'Christ Church', category: 1, ownership: 'Public', capacity: 80, water: true, access: true, notes: '' },
@@ -126,11 +182,19 @@
   // not on the island and parish-centre distances are meaningless.
   const MAX_PLAUSIBLE_DISTANCE_KM = 50;
 
+  function shelterCoords(s) {
+    const exact = SHELTER_LOCATIONS[s.name];
+    if (exact && exact.lat) return { lat: exact.lat, lon: exact.lon, exact: true };
+    const parish = PARISH_CENTROIDS[s.parish];
+    if (parish) return { lat: parish.lat, lon: parish.lon, exact: false };
+    return null;
+  }
+
   function shelterDistance(s) {
     if (!USER_LOCATION) return null;
-    const c = PARISH_CENTROIDS[s.parish];
+    const c = shelterCoords(s);
     if (!c) return null;
-    return haversineKm(USER_LOCATION, c);
+    return { km: haversineKm(USER_LOCATION, c), exact: c.exact };
   }
 
   function userIsOnIsland() {
@@ -143,10 +207,11 @@
     return min <= MAX_PLAUSIBLE_DISTANCE_KM;
   }
 
-  function formatDistance(km) {
-    if (km == null) return '';
-    if (km < 0.5) return 'In your parish';
-    return km.toFixed(1) + ' km from your parish';
+  function formatDistance(d) {
+    if (!d || d.km == null) return '';
+    const suffix = d.exact ? '' : ' from your parish';
+    if (d.km < 0.5) return d.exact ? 'Very close' : 'In your parish';
+    return d.km.toFixed(1) + ' km' + (d.exact ? ' away' : suffix);
   }
 
   function setLocationStatus(message) {
@@ -173,6 +238,25 @@
     render();
   }
 
+  function setLocationButtonState(state) {
+    const btn = document.getElementById('use-my-location');
+    if (!btn) return;
+    const label = btn.querySelector('.use-location-btn__label');
+    if (state === 'loading') {
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      if (label) label.textContent = 'Finding your location…';
+    } else if (state === 'success') {
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+      if (label) label.textContent = 'Location set — refresh';
+    } else {
+      btn.disabled = false;
+      btn.removeAttribute('aria-busy');
+      if (label) label.textContent = 'Use my location';
+    }
+  }
+
   function requestLocation() {
     if (!navigator.geolocation) {
       setLocationStatus('Your device does not support location. ' +
@@ -182,6 +266,7 @@
       return;
     }
     setLocationStatus('Finding your location…');
+    setLocationButtonState('loading');
     navigator.geolocation.getCurrentPosition(
       function (pos) {
         USER_LOCATION = { lat: pos.coords.latitude, lon: pos.coords.longitude };
@@ -189,6 +274,7 @@
           USER_LOCATION = null;
           setLocationStatus('You appear to be outside Barbados, so distance ' +
             'isn\'t meaningful. Filter by parish instead.');
+          setLocationButtonState('idle');
           resetSortToParish();
           render();
           return;
@@ -197,6 +283,7 @@
           'Sorted by distance from your parish. ' +
           'Two shelters in the same parish show the same distance.'
         );
+        setLocationButtonState('success');
         const sortEl = document.getElementById('filter-sort');
         if (sortEl) sortEl.value = 'distance';
         render();
@@ -212,11 +299,19 @@
           msg = 'The location request timed out. Filter by parish instead.';
         }
         setLocationStatus(msg);
+        setLocationButtonState('idle');
         resetSortToParish();
         render();
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
     );
+  }
+
+  // Clear a stale location-error message when the user interacts with another
+  // filter — keeps a successful "sorted by distance" message, drops failures.
+  function maybeClearStaleLocationStatus() {
+    if (USER_LOCATION) return; // success message stays
+    setLocationStatus(null);
   }
 
   function renderShelter(s) {
@@ -244,6 +339,15 @@
       ? `<p class="shelter__distance" aria-label="Distance from your location"><svg class="shelter__distance-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2v3M12 19v3M2 12h3M19 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>${escapeHtml(formatDistance(distance))}</p>`
       : '';
 
+    // Address (best-effort, OSM-geocoded). When we have an address we show
+    // it inline so users don't have to leave the page just to find out
+    // where the shelter is. When we don't, we fall back to a "Search this
+    // shelter on a map" prompt that opens Google Maps in a new tab.
+    const loc = SHELTER_LOCATIONS[s.name];
+    const addressHtml = loc && loc.address
+      ? `<p class="shelter__address">${escapeHtml(loc.address)}</p>`
+      : '';
+
     const notes = s.notes
       ? `<p class="shelter__notes">${escapeHtml(s.notes)}</p>`
       : '';
@@ -263,13 +367,13 @@
       <article class="shelter${s.restriction ? ' shelter--restricted' : ''}" role="listitem">
         ${statusHtml}
         ${restriction}
-        <h3 class="shelter__name">
-          <a class="shelter__link" href="${href}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.name)}</a>
-        </h3>
-        <p class="shelter__meta">${escapeHtml(s.parish)}, ${s.ownership === 'Public' ? 'public' : 'privately owned'}, capacity about ${s.capacity}</p>
+        <h3 class="shelter__name">${escapeHtml(s.name)}</h3>
+        <p class="shelter__meta">${escapeHtml(s.parish)}, ${s.ownership === 'Public' ? 'public' : 'privately owned'}, holds up to ${s.capacity} people (booklet planning figure — not live availability)</p>
+        ${addressHtml}
         ${distanceHtml}
         <div class="shelter__tags">${tags}${warningTags}</div>
         ${notes}
+        <p class="shelter__actions"><a class="shelter__link" href="${href}" target="_blank" rel="noopener noreferrer">Get directions on Google Maps</a></p>
       </article>
     `;
   }
@@ -311,7 +415,7 @@
         const db = shelterDistance(b);
         if (da == null) return 1;
         if (db == null) return -1;
-        return da - db;
+        return da.km - db.km;
       });
     } else {
       copy.sort(function (a, b) {
@@ -445,9 +549,14 @@
   }
 
   function bind() {
+    function onFilterChange() {
+      maybeClearStaleLocationStatus();
+      render();
+    }
+
     ['filter-parish', 'filter-access'].forEach(function (id) {
       const el = document.getElementById(id);
-      if (el) el.addEventListener('change', render);
+      if (el) el.addEventListener('change', onFilterChange);
     });
 
     const sortEl = document.getElementById('filter-sort');
@@ -456,6 +565,7 @@
         if (sortEl.value === 'distance' && !USER_LOCATION) {
           requestLocation();
         } else {
+          maybeClearStaleLocationStatus();
           render();
         }
       });
@@ -471,12 +581,12 @@
       let timer;
       searchEl.addEventListener('input', function () {
         clearTimeout(timer);
-        timer = setTimeout(render, 150);
+        timer = setTimeout(onFilterChange, 150);
       });
     }
 
     document.querySelectorAll('input[name="category"]').forEach(function (el) {
-      el.addEventListener('change', render);
+      el.addEventListener('change', onFilterChange);
     });
 
     const resetBtn = document.getElementById('reset-filters');

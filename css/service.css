@@ -115,11 +115,16 @@
   align-self: start;
 }
 /* Only stick the filters on desktop, where there's a side-by-side grid.
-   On mobile the filters sit above the results and must scroll out of view. */
+   On mobile the filters sit above the results and must scroll out of view.
+   On desktop the panel is also scrollable independently of the page so
+   shorter viewports can reach all controls (max-height = visible viewport
+   minus a small offset). */
 @media (min-width: 1024px) {
   .finder__filters {
     position: sticky;
     top: var(--spacing-s);
+    max-height: calc(100vh - 2 * var(--spacing-s));
+    overflow-y: auto;
   }
 }
 .finder__filters h2 {
@@ -177,8 +182,12 @@
   background: var(--color-grey-00);
   color: var(--color-text);
 }
+/* Category tags carry a short text prefix so the distinction reads even
+   if you can't tell the colours apart (deuteranopia / yellow vs blue). */
 .tag--cat1 { background: var(--color-yellow-40); }
+.tag--cat1::before { content: "① "; font-weight: 700; }
 .tag--cat2 { background: var(--color-blue-10); }
+.tag--cat2::before { content: "② "; font-weight: 700; }
 .tag--access { background: var(--color-teal-40); }
 .tag--water { background: var(--color-green-40); }
 .tag--public { background: var(--color-grey-00); }
@@ -262,6 +271,43 @@
   font-size: var(--font-size-caption);
   color: var(--color-text-muted);
   font-style: italic;
+}
+
+/* OSM-derived address line on each shelter card. Best-effort: some
+   shelters didn't get a confident geocode and won't show this line. */
+.shelter__address {
+  margin: 0;
+  font-size: var(--font-size-caption);
+  color: var(--color-text);
+}
+.shelter__address::before {
+  content: "📍 ";
+}
+
+/* Get-directions link at the foot of each card — separates "where it is"
+   from "how to get there". */
+.shelter__actions {
+  margin: 0;
+  margin-top: var(--spacing-xxs);
+  font-size: var(--font-size-caption);
+}
+
+/* Sort dropdown above the result list — separate from the filter
+   sidebar so users don't confuse narrowing with ordering. */
+.finder__sort {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-s);
+  margin-bottom: var(--spacing-s);
+  flex-wrap: wrap;
+}
+.finder__sort > .govbb-label {
+  margin: 0;
+}
+.finder__sort > .govbb-select-wrapper {
+  width: auto;
+  flex: 1;
+  max-width: 22rem;
 }
 
 /* Distance from the user's location, shown when they enable geolocation. */
