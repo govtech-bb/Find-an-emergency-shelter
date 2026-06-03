@@ -13,7 +13,7 @@
  *   - Activate: clear old caches by version.
  */
 
-const CACHE_VERSION = 'fas-2026-06-02-v4';
+const CACHE_VERSION = 'fas-2026-06-03-v5';
 const PRECACHE = [
   './',
   './index.html',
@@ -23,7 +23,7 @@ const PRECACHE = [
   './css/service.css',
   './js/shelters.js',
   './dist/assets/images/govbb-logo.svg',
-  './dist/assets/images/govbb-crest-small.svg',
+  './dist/assets/images/govbb-creast.png',
   './dist/assets/images/favicon.ico',
   './dist/assets/fonts/figtree-latin.woff2',
   './dist/assets/fonts/figtree-latin-ext.woff2',
