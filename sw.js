@@ -13,7 +13,7 @@
  *   - Activate: clear old caches by version.
  */
 
-const CACHE_VERSION = 'fas-2026-06-03-v5';
+const CACHE_VERSION = 'fas-2026-06-03-v6';
 const PRECACHE = [
   './',
   './index.html',

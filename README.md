@@ -27,7 +27,7 @@ This service is designed to work when it matters most — during a hurricane, wh
 
 ## Data source
 
-Shelter information is taken from the **2026 Emergency Shelter Booklet**, published by the Department of Emergency Management in partnership with the Ministry of Education, Transformation.
+Shelter information is taken from the **2026 Emergency Shelter Booklet**, published by the Department of Emergency Management in partnership with the Ministry of Educational Transformation.
 
 The booklet is reviewed and republished annually before the start of hurricane season on 1 June.
 
